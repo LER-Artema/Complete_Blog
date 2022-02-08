@@ -1,5 +1,6 @@
 from datetime import date
 from functools import wraps
+
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -9,7 +10,9 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentPostForm
+
 
 # Authentication Function
 def admin_only(f):
