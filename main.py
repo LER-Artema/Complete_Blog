@@ -12,8 +12,9 @@ from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentPostForm
-
-
+import os
+from dotenv import load_dotenv
+load_dotenv('/Users/Artema/Desktop/my_envs/my_envs.env')
 # Authentication Function
 def admin_only(f):
     @wraps(f)
@@ -30,7 +31,7 @@ def admin_only(f):
 # inicialización de la aplicación y sus extensiones
 login_manager = LoginManager()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 login_manager.init_app(app)
