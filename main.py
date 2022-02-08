@@ -13,8 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentPostForm
 import os
-from dotenv import load_dotenv
-load_dotenv('/Users/Artema/Desktop/my_envs/my_envs.env')
+
 # Authentication Function
 def admin_only(f):
     @wraps(f)
@@ -31,7 +30,7 @@ def admin_only(f):
 # inicialización de la aplicación y sus extensiones
 login_manager = LoginManager()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 login_manager.init_app(app)
@@ -40,7 +39,7 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=Fa
                     base_url=None)
 
 # vínculo a la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
