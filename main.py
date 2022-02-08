@@ -13,6 +13,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentPostForm
 import os
+from dotenv import load_dotenv
 
 # Authentication Function
 def admin_only(f):
@@ -28,9 +29,10 @@ def admin_only(f):
 
 
 # inicialización de la aplicación y sus extensiones
+load_dotenv('/Users/Artema/Desktop/my_envs/my_envs.env')
 login_manager = LoginManager()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 login_manager.init_app(app)
