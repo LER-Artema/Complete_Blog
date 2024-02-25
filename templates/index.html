@@ -1,56 +1,134 @@
 {% include "header.html" %}
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://images.hdqwalls.com/download/porsche-911-carrera-rsr-1973-4k-8l-2560x1080.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>David's Blog</h1>
-            <span class="subheading">Personal Portafolio</span>
-          </div>
-        </div>
-      </div>
+<!-- Page Header -->
+{#  <header class="masthead" style="background-image: url('https://images.hdqwalls.com/download/porsche-911-carrera-rsr-1973-4k-8l-2560x1080.jpg')">#}
+<header class="masthead" style="height: 320px; ">
+    <div class="site-heading">
+{#        <h1 id="highlight" style="margin-right: 1500px">Data Science </h1>#}
+        <hr id="invisible">
+        <h1 id="" style="color: #A3A383">—| Portfolio |—</h1>
     </div>
-  </header>
+</header>
 
-  <!-- Main Content -->
-  <div class="container">
+<!-- Main Content -->
+<div class="container" style="margin-bottom: 100px" >
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        {% for post in all_posts %}
-        <div class="post-preview">
-          <a href="{{ url_for('show_post', post_id=post.id) }}">
-            <h2 class="post-title">
-              {{post.title}}
-            </h2>
-            <h3 class="post-subtitle">
-              {{post.subtitle}}
-            </h3>
-          </a>
-          <p class="post-meta">Posted by
-            <a href="#">{{post.author.name}}</a>
-            on {{post.date}}
-              {% if admin %}
-                <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
-              {% endif %}
+        <div class="col-lg-8 col-md-10 mx-auto" style="bottom: 70px">
+            {% for post in all_posts %}
+                <div class="post-preview" style="text-align: center; ">
+                    <a href="{{ url_for('show_post', notebook_id=post.id) }}">
+                        <h2 class="post-title" id="title-highlight">
+                               [ {{ post.title }} ]
+                        </h2>
+                        {#                        <hr id="invisible">#}
+                        {#                        <h1 class="post-subtitle" id="highlight">#}
+                        {#                            {{ post.subtitle }}#}
+                        {#                        </h1>#}
+                    </a>
+                    <div id="botones" class="botones"
+                         style="display: none; height: 50px; width: 143px; z-index: -1; padding-bottom: 100px">
+                        <button class="button" id="text-align"
+                                style="margin-top: 10px; width: 69px; height: 59px; font-size: 34px;">
+                            <a
+                                    href="{{ url_for('download', notebook=post.id) }}" class="download">
+                                <img
+                                    style="height: 54%; margin-bottom: 7px"
+                                    src="static/img/Funtionality Icons/Download.png">
+                            </a>
+                        </button>
 
-          </p>
+                        <button class="button" id="text-align"
+                                style="margin-top: 10px; width: 69px; height: 59px;font-size: 34Px">
+                            <a
+                                    href="{{ url_for('delete_post', notebook_id=post.id) }}" class="delete">
+                                <img style="height: 54%; margin-bottom: 8px"
+                                     src="static/img/Funtionality Icons/delete.png">
+                            </a>
+
+                        </button>
+{#                        <hr style="color: floralwhite; border: 1px solid floralwhite; width: 100%;" class="button" >#}
+
+                    </div>
+
+                </div>
+            {% endfor %}
+
+
+            <!-- New Post -->
+            {#            <div class=" col-lg-3 col-md-7 mx-auto">#}
+            {#                <div>#}
+            {#                    {% if admin %}#}
+            {#                        <a class="button" id="text-align" href="{{ url_for('add_new_post') }}">Create New Post</a>#}
+            {#                    {% endif %}#}
+            {#                </div>#}
+            {#            </div>#}
+
         </div>
-        <hr>
-        {% endfor %}
-
-
-        <!-- New Post -->
-        <div class="clearfix">
-            {% if admin %}
-              <a class="btn btn-primary float-right" href="{{url_for('add_new_post')}}">Create New Post</a>
-            {% endif %}
-        </div>
-      </div>
     </div>
-  </div>
-  <hr>
+</div>
 
-{% include "footer.html" %}
+<script>
+
+    var files_containers = document.querySelectorAll(".post-preview");
+    var files_tags = document.querySelectorAll(".post-title");
+    var associated_buttons = document.querySelectorAll(".botones");
+    var locators = []
+    var locators_button = []
+    var finished = true
+    for (var i = 0; i < files_tags.length; i++) {
+        locators.push(files_tags[i].innerHTML)
+    }
+
+    for (var i = 0; i < associated_buttons.length; i++) {
+        locators_button.push(associated_buttons[i].innerHTML)
+    }
+
+    for (var i = 0; i < files_tags.length; i++) {
+
+        files_tags[i].addEventListener("mouseenter", function () {
+            resource_locator = locators.findIndex(x => x == this.innerHTML)
+            dentroContenedor = true;
+            if (finished) {
+
+                associated_buttons[resource_locator].style.position = 'relative';
+                associated_buttons[resource_locator].classList.remove('oculto');
+                associated_buttons[resource_locator].style.display = 'block'
+            }
+        });
+
+        files_tags[i].addEventListener('mouseleave', function () {
+            dentroContenedor = true;
+            resource_locator = locators.findIndex(x => x == this.innerHTML)
+            if (finished) {
+
+                associated_buttons[resource_locator].style.zIndex = 1;
+            }
+        });
+
+        associated_buttons[i].addEventListener('mouseenter', function () {
+            dentroContenedor = true;
+            fall = true
+
+        });
+
+        associated_buttons[i].addEventListener('mouseleave', function () {
+            resource_locator = locators_button.findIndex(x => x == this.innerHTML)
+            dentroContenedor = false; // Establecer como falso cuando el cursor salga de los botones
+            if (!dentroContenedor && fall) {
+                var delayInMilliseconds = 550; //1 second
+                associated_buttons[resource_locator].style.zIndex = -1;
+                associated_buttons[resource_locator].classList.add('oculto');
+
+                finished = false
+                setTimeout(function () {
+                        associated_buttons[resource_locator].style.position = 'absolute';
+                        finished = true
+
+                    },
+                    delayInMilliseconds);
+            }
+
+        });
+    }
+
+</script>

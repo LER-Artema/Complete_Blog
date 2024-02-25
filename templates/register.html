@@ -1,33 +1,37 @@
-{% extends 'bootstrap/base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-
-{% block content %}
 {% include "header.html" %}
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/register.gif')}})">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Register</h1>
-            <span class="subheading">Start Contributing to the Blog!</span>
-          </div>
-        </div>
-      </div>
+<!-- Page Header -->
+<header class="masthead"
+        {#          style="background-image: url({{ url_for('static', filename='img/Snake.jpg')}})"#}
+>
+
+    <div class="page-heading" style="padding-bottom: 70px; padding-top:120px">
+        <h1>Register</h1>
     </div>
-  </header>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
-       {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+</header>
 
-      </div>
-    </div>
-  </div>
+<div style="align-self: center; width: 300px; margin: 0 auto; align-items: center">
 
-{% include "footer.html" %}
-{% endblock %}
+    <form style="bottom: 300px; text-align: center" href="{{ url_for('login') }}" method="POST"
+          enctype="multipart/form-data">
+
+        <input class="form-control custom-input" id="title" name="name" required="" type="text" value=""
+               style="margin-bottom: 0px; margin-top: 65px; background-color: black;
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+
+        <input class="form-control custom-input" id="title" name="email" required="" type="email" value=""
+               style="margin-bottom: 0px; margin-top: 65px; background-color: black;
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+
+        <input class="form-control custom-input" id="title" name="password" required="" type="password" value=""
+               style="margin-bottom: 0px; margin-top: 65px; background-color: black;
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+
+        <input type="submit" id="uploadSound" class="button" value="SUBMIT" style="margin-top: 50px">
+
+
+    </form>
+</div>
+
+

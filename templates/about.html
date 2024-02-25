@@ -1,35 +1,92 @@
 {% include "header.html" %}
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url({{ url_for('static', filename='img/about-bg.png')}})">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>About Me</h1>
-            <span class="subheading">This is what I do.</span>
-          </div>
+<!-- Page Header -->
+<header class="masthead" style="margin-top: 0px; padding-top: 0px">
+
+    <div class="page-heading" style="padding-top: 110px; padding-bottom: 54px">
+        <h1 style="color: floralwhite">DATA MANIPULATION</h1>
+        <span style="color: floralwhite; margin-top: 0" class="subheading">Illusion of freedom</span>
+    </div>
+
+</header>
+
+<!-- Main Content -->
+<div class="container" style="padding-top: 0px; margin-bottom: 200px">
+    <div class="row" style="padding-top: 0px">
+        <div class="col-lg-8 col-md-10 mx-auto" style="background-color: rgba(0, 0, 0, 0.6);" style="padding-top: 0px">
+            <p style="color: floralwhite; opacity: 1; text-align: center"><span
+                    class="palabra-especial">Information</span>, the currency of power</p>
+
+            <p style="color: floralwhite" id="effect">
+                In the contemporary world, we are immersed in a sea of information. With every
+                click, every scroll, we absorb data that influences our perceptions, beliefs, and actions. But how much
+                of what we see, read, and hear is truly free from <span
+                    class="palabra-especial">manipulation</span>? How much of our supposed <span
+                    class="palabra-especial">freedom</span> is
+                actually an illusion carefully constructed by those who control the flow of information?
+            </p>
+
+            <p style="color: floralwhite">
+
+                Metal Gear Solid 2: Sons of Liberty presents us with a world where information is both a weapon and a
+                currency of power. In this work, we witness how the invisible threads of manipulation intertwine with
+                the fabric of society. The media, government institutions, and corporations wield control
+                over what we know, we believe, and ultimately, how we act.
+            </p>
+
+            <p style="color: floralwhite">
+
+                But information manipulation goes beyond mere headlines and biased news. It extends to our genes, the
+                very core of our physical being, adopting memetic patterns that shape our behaviors in ways we
+                barely understand. We are puppets in a dance of preconceived ideas, a product of the narrative
+                imposed by ourselves.
+            </p>
+
+            <p style="color: floralwhite">
+
+                The illusion of freedom is perhaps the most insidious deception of all. We believe we are free to
+                choose, free to think, free to act. But in reality, our choices are limited by the confines of our
+                ideas, personality and pasts experiences. We are prisoners of our own minds, of our likes and
+                dislikes.
+            </p>
+
+            <p style="color: floralwhite">
+
+                What can we do in a world where truth is relative and freedom is an illusion? The answer lies in
+                awareness. We must awaken from our mental lethargy, question pre-established narratives, and seek truth
+                beyond surface appearances, beyond our relative social realities and find it in its absolute form. Only then can
+                we free ourselves from the yoke of manipulation and reclaim our legitimate born right.
+            </p>
+
+            <p style="color: floralwhite">
+
+                Metal Gear Solid 2: Sons of Liberty reminds us that our human nature always seek for the ultimate. It is
+                up to us to strife for a conscious world, to unravel the deceptions, and to seek truth in a world of
+                illusions. Only then can we find the true freedom.
+
+
+            </p>
+
         </div>
-      </div>
     </div>
-  </header>
+</div>
 
-  <!-- Main Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Disfruto del diseño de páginas web y el análisis de datos</p>
-        <p>Estás viendo mi página diseñada con Flask, la cual contiene mi portafolio de proyectos.
-        La página contiene funciones de autenticación, usuarios, base de datos, protección de contraseñas y
-            de rutas de la página.
+<script>
+    var files_containers = document.querySelectorAll(".palabra-especial");
 
-            Manejo Python, JS, HTML, Bootstrap, y CSS entre otras cosas.
-        </p>
-      </div>
-    </div>
-  </div>
+    for (var i = 0; i < files_containers.length; i++) {
 
-  <hr>
+        // Agrega un evento de clic al span de la palabra especial
+        files_containers[i].addEventListener('mouseover', function () {
+            // Aquí puedes definir el efecto o acción que deseas aplicar
+            this.style.color = '#A3A383'; // Por ejemplo, cambiar el color del texto a rojo
+        });
+        {#files_containers[i].addEventListener('click', function () {#}
+        {#    // Aquí puedes definir el efecto o acción que deseas aplicar#}
+        {#    this.style.color = '#d93f3f'; // Por ejemplo, cambiar el color del texto a rojo#}
+    }
 
-  {% include "footer.html" %}
+
+</script>
+
+{#{% include "footer.html" %}#}
