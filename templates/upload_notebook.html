@@ -12,22 +12,25 @@
 </header>
 
 <!-- Main Content -->
-<div style="align-self: center; width: 300px; margin: 0 auto; align-items: center">
+<div style="align-self: center; width: 300px; margin: 0 auto; align-items: center;
+  justify-content: center; /* Centra horizontalmente *//">
     <form style="bottom: 300px; text-align: center" href="{{ url_for('upload_notebook') }}" method="POST"
           enctype="multipart/form-data">
 
         <input class="form-control custom-input" id="title" name="title" required="" type="text" value=""
                style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="" placeholder="Project Name"
-        >
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus=""
+               placeholder="Project Name">
 
         <input type="file" name="file" id="file" class="inputfile" accept=".ipynb" required>
-        <label name='upload' for="file" style="margin-top:50px; resize: none " id="upload">— UPLOAD —</label>
+        <label name='upload' for="file" style="margin-top:50px;" id="upload">— UPLOAD
+            —</label>
         <input type="submit" id="uploadSound" class="button" value="SUBMIT" style="margin-top: 50px">
-
 
     </form>
 </div>
+
+
 <audio style="opacity: 0" id="audioPlayer" controls>
     <source src="static/sounds/VRSpawn.mp3" type="audio/mpeg">
 </audio>
@@ -40,19 +43,25 @@
     var has_file = false
     var has_title = false
     var input = document.getElementById('title');
+    var title = null
     // Agrega un listener para el evento 'input' que convierte el texto a mayúsculas
     input.addEventListener('input', function () {
         this.value = this.value.toUpperCase();
+        title = input.value
+
     });
 
 
     document.getElementById('file').addEventListener('change', function () {
         has_file = true
         var nombreArchivo = this.files[0].name;
+        if (nombreArchivo.length > 15){
+            nombreArchivo = nombreArchivo.substring(0, 16) + " ...";
+        }
         document.getElementById('upload').innerText = nombreArchivo
         document.getElementById('upload').style.backgroundColor = '#A3A383'
         document.getElementById('upload').style.color = 'floralwhite'
-            document.getElementById('upload').style.borderColor = '#ccc'
+        document.getElementById('upload').style.borderColor = '#ccc'
 
 
     });
@@ -61,14 +70,14 @@
             document.getElementById('upload').style.backgroundColor = '#b83232'
             document.getElementById('upload').style.color = 'floralwhite'
             document.getElementById('upload').style.borderColor = 'floralwhite'
-
         }
     })
 
+    console.log(input.value)
 
     $(document).ready(function () {
         $("#uploadSound").click(function () {
-            if (has_file) {
+            if (has_file && (title !== null)) {
                 $("#audioPlayer")[0].play();
             } else {
                 $("#denied")[0].play();

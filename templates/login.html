@@ -11,24 +11,83 @@
 
 </header>
 
+{% if no_user %}
+    <a style="opacity: 0" id="email_error">Error</a>
+{% else: %}
+    <a style="opacity: 0" id="email_error">Okay</a>
+
+{% endif %}
+
+
+{% if no_password %}
+    <a style="opacity: 0" id="password_error">Error</a>
+{% else: %}
+    <a style="opacity: 0" id="password_error">Okay</a>
+
+{% endif %}
+
 
 <div style="align-self: center; width: 300px; margin: 0 auto; align-items: center">
 
-<form style="bottom: 300px; text-align: center" href="{{ url_for('login') }}" method="POST"
-      enctype="multipart/form-data">
+    <form style="bottom: 300px; text-align: center" href="{{ url_for('login') }}" method="POST"
+          enctype="multipart/form-data">
 
-    <input class="form-control custom-input" id="title" name="email" required="" type="email" value=""
-           style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+        <input class="form-control custom-input" id="email" name="email" required="" type="email" value=""
+               style="margin-bottom: 0px; margin-top: 65px; background-color: black;
+                       {% if no_user %}
 
-    <input class="form-control custom-input" id="title" name="password" required="" type="password" value=""
-           style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+                           border: 3px solid #e53935;
+                       {% else: %}
+                           border: 3px solid #ccc;
 
-    <input type="submit" id="uploadSound" class="button" value="LOGIN" style="margin-top: 50px">
+                       {% endif %}
+
+                       text-align: center; font-size: 20px; color:floralwhite" ; onfocus=""
+               placeholder="EMAIL">
+
+        <input class="form-control custom-input" id="password" name="password" required="" type="password" value=""
+               style="margin-bottom: 0px; margin-top: 65px; background-color: black;
+
+                       {% if no_password %}
+
+                           border: 3px solid #e53935;
+                       {% else: %}
+                           border: 3px solid #ccc;
+
+                       {% endif %}
+                       text-align: center; font-size: 20px; color:floralwhite" ; onfocus=""
+               placeholder="PASSWORD">
+
+        <input type="submit" id="uploadSound" class="button" value="LOGIN" style="margin-top: 50px">
 
 
-</form>
+    </form>
 </div>
 
+<audio style="opacity: 0" id="denied" controls>
+    <source src="static/sounds/Access Denied.mp3" type="audio/mpeg">
+</audio>
 
+
+{% if no_user or no_password %}
+    <script>
+        $(document).ready(function () {
+            $("#denied")[0].play();})
+
+    </script>
+{% endif %}
+
+
+<script>
+
+    document.getElementById('email').addEventListener('click', function (){
+    this.style.borderColor = '#ccc'
+
+    })
+    document.getElementById('password').addEventListener('click', function (){
+    this.style.borderColor = '#ccc'
+
+    })
+
+
+</script>

@@ -1,6 +1,6 @@
 from datetime import date
 from functools import wraps
-from flask import Flask, render_template, redirect, url_for, flash, abort, request, send_from_directory, send_file
+from flask import Flask, render_template, redirect, url_for, abort, request, send_file
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -9,20 +9,22 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
+# from werkzeug.utils import secure_filename
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentPostForm
 import os
 from dotenv import load_dotenv
 import time
 from pathlib import Path
 
-
 # Authentication Function
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # If id is not 1 then return abort with 403 error
-        if current_user.id != 1:
+        try:
+            if current_user.id != 1:
+                return abort(403)
+        except:
             return abort(403)
         # Otherwise continue with the route function
         return f(*args, **kwargs)
@@ -143,9 +145,12 @@ def upload_notebook():
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
     if request.method == 'POST':
-
         f = request.files['file']
-        name = str(f.filename).strip('.ipynb') + '.html'
+        f.filename = f.filename.replace('(', '')
+        f.filename = f.filename.replace(')', '')
+        print(f.filename)
+
+        name = str(f.filename).split('.ipynb')[0] + '.html'
         title = request.form['title']
 
         notebook = Notebook(
@@ -154,7 +159,7 @@ def upload_notebook():
         )
         db.session.add(notebook)
         db.session.commit()
-        f.save(f'templates/projects/notebooks/{secure_filename(f.filename)}')
+        f.save(f'templates/projects/notebooks/{f.filename}')
         os.system(f'jupyter nbconvert --to html templates/projects/notebooks/{f.filename}')
         Path(f"templates/projects/notebooks/{name}").rename(f"templates/projects/html_notebooks/{name}")
 
@@ -173,12 +178,35 @@ def download(notebook):
 
 
 @app.route("/delete/<int:notebook_id>")
-@admin_only
+# @admin_only
 def delete_post(notebook_id):
-    notebook_to_delete = Notebook.query.get(notebook_id)
-    db.session.delete(notebook_to_delete)
-    db.session.commit()
-    return redirect(url_for('get_all_notebooks'))
+    admin = None
+
+    try:
+        if current_user.is_authenticated and current_user.id == 1:
+            admin = True
+    except:
+        pass
+    if admin:
+        import os, shutil
+        notebook_to_delete = Notebook.query.get(notebook_id)
+        notebook_html_file = notebook_to_delete.file
+        notebook_file = (notebook_to_delete.file).split('.html')[0] + '.ipynb'
+
+        os.remove(f"templates/projects/html_notebooks/{notebook_html_file}")
+        os.remove(f"templates/projects/notebooks/{notebook_file}")
+
+
+        db.session.delete(notebook_to_delete)
+        db.session.commit()
+        # Path(f"templates/projects/notebooks/{name}").(f"templates/projects/html_notebooks/{name}")
+
+        return redirect(url_for('get_all_notebooks'))
+    else:
+        # image = 'img/MGS Full image/Frey Raiden.png'
+
+
+        return redirect(url_for('forbidden'))
 
 
 @app.route("/about")
@@ -200,21 +228,36 @@ def register():
         admin = True
     register_form = RegisterForm()
     if request.method == 'POST':
+
         email = request.form['email']
         password = request.form['password']
         name = request.form['name']
-        user = User(
-            email=email,
-            password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8),
-            name=name
-        )
 
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return redirect(url_for('get_all_notebooks'))
+        email_exists = User.query.filter(User.email == email).first()
+        if email_exists == None:
+            user = User(
+                email=email,
+                password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8),
+                name=name
+            )
+
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return redirect(url_for('get_all_notebooks'))
+
+        else:
+
+            return render_template("register.html", form=register_form, image=image, admin=admin, email_error = True)
+
     return render_template("register.html", form=register_form, image=image, admin=admin)
 
+
+@app.route("/forbidden")
+def forbidden():
+    image = 'img/MGS Full image/Frey Raiden.png'
+    admin = False
+    return render_template("denied.html", image=image, admin=admin)
 
 @app.route("/contact")
 def contact():
@@ -240,16 +283,18 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if not user:
-            flash("That email does not exist, please try again.")
-            return redirect(url_for('login'))
+            # flash("That email does not exist, please try again.")
+            return render_template("login.html", image=image, admin=admin, no_user = True)
 
 
         elif not check_password_hash(user.password, password):
-            flash('Incorrect Password, please try again.')
-            return redirect(url_for('login'))
+            # flash('Incorrect Password, please try again.')
+            return render_template("login.html", image=image, admin=admin, no_password = True)
         else:
             login_user(user)
             return redirect(url_for('get_all_notebooks'))
+
+
     return render_template("login.html", image=image, admin=admin)
 
 

@@ -16,17 +16,26 @@
     <form style="bottom: 300px; text-align: center" href="{{ url_for('login') }}" method="POST"
           enctype="multipart/form-data">
 
-        <input class="form-control custom-input" id="title" name="name" required="" type="text" value=""
+        <input class="form-control custom-input" id="name" name="name" required="" type="text" value=""
                style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus=""
+               placeholder="ALIAS">
 
-        <input class="form-control custom-input" id="title" name="email" required="" type="email" value=""
+        <input class="form-control custom-input" id="email" name="email" required="" type="email" value=""
                style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+                       {% if email_error %}
 
-        <input class="form-control custom-input" id="title" name="password" required="" type="password" value=""
+                           border: 3px solid #e53935;
+                       {% else: %}
+                           border: 3px solid #ccc;
+
+                       {% endif %}
+                       text-align: center; font-size: 20px; color:floralwhite" ; onfocus="" placeholder="EMAIL">
+
+        <input class="form-control custom-input" id="password" name="password" required="" type="password" value=""
                style="margin-bottom: 0px; margin-top: 65px; background-color: black;
-               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus="">
+               border: 3px solid #ccc; text-align: center; font-size: 20px; color:floralwhite" ; onfocus=""
+               placeholder="PASSWORD">
 
         <input type="submit" id="uploadSound" class="button" value="SUBMIT" style="margin-top: 50px">
 
@@ -34,4 +43,23 @@
     </form>
 </div>
 
+<audio style="opacity: 0" id="denied" controls>
+    <source src="static/sounds/Access Denied.mp3" type="audio/mpeg">
+</audio>
 
+{% if email_error %}
+    <script>
+        $(document).ready(function () {
+            $("#denied")[0].play();})
+
+    </script>
+{% endif %}
+
+
+<script>
+
+    document.getElementById('email').addEventListener('click', function () {
+        this.style.borderColor = '#ccc'
+    })
+
+</script>

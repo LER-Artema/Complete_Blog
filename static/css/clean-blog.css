@@ -245,7 +245,7 @@ img::-moz-selection {
     #mainNav.is-fixed {
         /* when the user scrolls down, we hide the header right above the viewport */
         position: fixed;
-        top: -67px;
+        top: -73px;
         transition: transform 0.2s;
         border-bottom: 1px solid #A3A383;
         background-color: black;
@@ -956,3 +956,4 @@ input[type="password"]:focus {
     box-shadow: 0 0 70px black;
     transition: 0.3s ease-in-out;
 }
+
