@@ -148,7 +148,6 @@ def upload_notebook():
         f = request.files['file']
         f.filename = f.filename.replace('(', '')
         f.filename = f.filename.replace(')', '')
-        print(f.filename)
 
         name = str(f.filename).split('.ipynb')[0] + '.html'
         title = request.form['title']
