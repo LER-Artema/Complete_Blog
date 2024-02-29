@@ -113,9 +113,9 @@ db.create_all()
 
 @app.route('/')
 def get_all_notebooks():
-    # image = 'img/MGS Full image/IMG_9674.JPG'
-    # image = 'img/MGS Full image/Frey Raiden.png'
-    image = 'img/MGS Full image/Speech.JPG'
+    # image = 'MGS Full image/IMG_9674.JPG'
+    # image = 'MGS Full image/Frey Raiden.png'
+    image = 'MGS Full image/Speech.JPG'
 
     notebooks = Notebook.query.all()
     admin = None
@@ -128,9 +128,9 @@ def get_all_notebooks():
 # Ruta original del blogpost
 # @app.route('/')
 # def get_all_notebooks():
-#     image = 'img/MGS Full image/IMG_9674.JPG'
-#     # image = 'img/MGS Full image/Frey Raiden.png'
-#     image = 'img/MGS Full image/Speech.JPG'
+#     image = 'MGS Full image/IMG_9674.JPG'
+#     # image = 'MGS Full image/Frey Raiden.png'
+#     image = 'MGS Full image/Speech.JPG'
 #
 #     posts = BlogPost.query.all()
 #     admin = None
@@ -141,7 +141,7 @@ def get_all_notebooks():
 #
 @app.route('/upload_notebook', methods=['GET', 'POST'])
 def upload_notebook():
-    image = 'img/MGS Full image/Snake.jpg'
+    image = 'MGS Full image/Snake.jpg'
     admin = None
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
@@ -203,7 +203,7 @@ def delete_post(notebook_id):
 
         return redirect(url_for('get_all_notebooks'))
     else:
-        # image = 'img/MGS Full image/Frey Raiden.png'
+        # image = 'MGS Full image/Frey Raiden.png'
 
 
         return redirect(url_for('forbidden'))
@@ -211,7 +211,7 @@ def delete_post(notebook_id):
 
 @app.route("/about")
 def about():
-    image = 'img/MGS Full image/IMG_9674.JPG'
+    image = 'MGS Full image/IMG_9674.JPG'
     admin = None
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
@@ -221,8 +221,8 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     admin = None
-    # image = 'img/MGS Full image/Ray Moded.jpeg'
-    image = 'img/MGS Full image/RS.jpg'
+    # image = 'MGS Full image/Ray Moded.jpeg'
+    image = 'MGS Full image/RS.jpg'
 
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
@@ -255,14 +255,14 @@ def register():
 
 @app.route("/forbidden")
 def forbidden():
-    image = 'img/MGS Full image/Frey Raiden.png'
+    image = 'MGS Full image/Frey Raiden.png'
     admin = False
     return render_template("denied.html", image=image, admin=admin)
 
 @app.route("/contact")
 def contact():
-    # image = 'img/MGS Full Image/IMG_9601.JPG'
-    image = 'img/MGS Full image/Frey Raiden.png'
+    # image = 'MGS Full Image/IMG_9601.JPG'
+    image = 'MGS Full image/Frey Raiden.png'
 
     admin = None
     if current_user.is_authenticated and current_user.id == 1:
@@ -273,7 +273,7 @@ def contact():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin = None
-    image = 'img/MGS Full Image/IMG_9640.JPG'
+    image = 'MGS Full Image/IMG_9640.JPG'
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
 
@@ -307,7 +307,7 @@ def logout():
 # Ruta original de show posts
 # @app.route("/post/<int:post_id>", methods=['GET', 'POST'])
 # def show_post(post_id):
-#     image = 'img/MGS Full image/Snake.jpg'
+#     image = 'MGS Full image/Snake.jpg'
 #     requested_post = BlogPost.query.get(post_id)
 #     comments = Comments.query.all()
 #
@@ -333,7 +333,7 @@ def logout():
 @app.route("/new-post", methods=['GET', 'POST'])
 @admin_only
 def add_new_post():
-    image = 'img/MGS Full image/Snake.jpg'
+    image = 'MGS Full image/Snake.jpg'
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
     form = CreatePostForm()
@@ -376,7 +376,7 @@ def edit_post(post_id):
 
 @app.route("/post/<int:notebook_id>", methods=['GET', 'POST'])
 def show_post(notebook_id):
-    image = 'img/MGS Full image/Snake.jpg'
+    image = 'MGS Full image/Snake.jpg'
     requested_notebook = Notebook.query.get(notebook_id)
 
     admin = None
