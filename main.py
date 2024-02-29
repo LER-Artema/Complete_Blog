@@ -39,6 +39,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MAX_CONTENT_PATH'] = 10000000
 app.config['FLASK_DEBUG'] = 0
+app.static_folder = 'static'
+app.static_url_path = 'static'
 
 ckeditor = CKEditor(app)
 Bootstrap(app)
@@ -112,7 +114,7 @@ db.create_all()
 
 @app.route('/')
 def get_all_notebooks():
-    image = 'img/MGS Full image/IMG_9674.JPG'
+    # image = 'img/MGS Full image/IMG_9674.JPG'
     # image = 'img/MGS Full image/Frey Raiden.png'
     image = 'img/MGS Full image/Speech.JPG'
 
@@ -260,7 +262,7 @@ def forbidden():
 
 @app.route("/contact")
 def contact():
-    image = 'img/MGS Full Image/IMG_9601.JPG'
+    # image = 'img/MGS Full Image/IMG_9601.JPG'
     image = 'img/MGS Full image/Frey Raiden.png'
 
     admin = None
