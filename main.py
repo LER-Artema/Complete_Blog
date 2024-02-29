@@ -43,6 +43,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MAX_CONTENT_PATH'] = 10000000
 app.config['FLASK_DEBUG'] = 0
 
+
 ckeditor = CKEditor(app)
 Bootstrap(app)
 login_manager.init_app(app)
