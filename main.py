@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 import time
 from pathlib import Path
 
+
 # Authentication Function
 def admin_only(f):
     @wraps(f)
@@ -149,6 +150,16 @@ def upload_notebook():
         f.filename = f.filename.replace('(', '')
         f.filename = f.filename.replace(')', '')
 
+        directory = 'templates/projects/notebooks/'
+        directory_html = 'templates/projects/html_notebooks/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        if not os.path.exists(directory_html):
+            os.makedirs(directory_html)
+
+        f.save(os.path.join(directory, f.filename))
+
+
         name = str(f.filename).split('.ipynb')[0] + '.html'
         title = request.form['title']
 
@@ -158,7 +169,6 @@ def upload_notebook():
         )
         db.session.add(notebook)
         db.session.commit()
-        f.save(f'templates/projects/notebooks/{f.filename}')
         os.system(f'jupyter nbconvert --to html templates/projects/notebooks/{f.filename}')
         Path(f"templates/projects/notebooks/{name}").rename(f"templates/projects/html_notebooks/{name}")
 
@@ -195,7 +205,6 @@ def delete_post(notebook_id):
         os.remove(f"templates/projects/html_notebooks/{notebook_html_file}")
         os.remove(f"templates/projects/notebooks/{notebook_file}")
 
-
         db.session.delete(notebook_to_delete)
         db.session.commit()
         # Path(f"templates/projects/notebooks/{name}").(f"templates/projects/html_notebooks/{name}")
@@ -203,7 +212,6 @@ def delete_post(notebook_id):
         return redirect(url_for('get_all_notebooks'))
     else:
         # image = 'img/Funtionality Icons/Frey Raiden.png'
-
 
         return redirect(url_for('forbidden'))
 
@@ -247,7 +255,7 @@ def register():
 
         else:
 
-            return render_template("register.html", form=register_form, image=image, admin=admin, email_error = True)
+            return render_template("register.html", form=register_form, image=image, admin=admin, email_error=True)
 
     return render_template("register.html", form=register_form, image=image, admin=admin)
 
@@ -257,6 +265,7 @@ def forbidden():
     image = 'img/Funtionality Icons/Frey Raiden.png'
     admin = False
     return render_template("denied.html", image=image, admin=admin)
+
 
 @app.route("/contact")
 def contact():
@@ -272,7 +281,7 @@ def contact():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     admin = None
-    image = 'img/Funtionality Icons/MGS Full Image/IMG_9640.JPG'
+    image = 'img/Funtionality Icons/IMG_9640.JPG'
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
 
@@ -283,16 +292,15 @@ def login():
         user = User.query.filter_by(email=email).first()
         if not user:
             # flash("That email does not exist, please try again.")
-            return render_template("login.html", image=image, admin=admin, no_user = True)
+            return render_template("login.html", image=image, admin=admin, no_user=True)
 
 
         elif not check_password_hash(user.password, password):
             # flash('Incorrect Password, please try again.')
-            return render_template("login.html", image=image, admin=admin, no_password = True)
+            return render_template("login.html", image=image, admin=admin, no_password=True)
         else:
             login_user(user)
             return redirect(url_for('get_all_notebooks'))
-
 
     return render_template("login.html", image=image, admin=admin)
 
