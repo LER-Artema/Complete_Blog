@@ -15,6 +15,7 @@ import os
 from dotenv import load_dotenv
 import time
 from pathlib import Path
+from nbconvert import HTMLExporter
 
 
 # Authentication Function
@@ -169,10 +170,30 @@ def upload_notebook():
         )
         db.session.add(notebook)
         db.session.commit()
-        os.system(f'jupyter nbconvert --to html templates/projects/notebooks/{f.filename}')
-        Path(f"templates/projects/notebooks/{name}").rename(f"templates/projects/html_notebooks/{name}")
+        import nbformat
+        # from nbconvert.preprocessors import ExecutePreprocessor
 
-        time.sleep(3)
+        # read source notebook
+        with open(f'templates/projects/notebooks/{f.filename}') as f:
+            nb = nbformat.read(f, as_version=4)
+
+        # execute notebook
+        # ep = ExecutePreprocessor(timeout=-1, kernel_name='python3')
+        # ep.preprocess(nb)
+
+        # export to html
+        html_exporter = HTMLExporter()
+        html_exporter.exclude_input = False
+        html_data, resources = html_exporter.from_notebook_node(nb)
+
+        # write to output file
+        with open(f"templates/projects/html_notebooks/{name}", "w",) as r:
+            r.write(html_data)
+
+
+        # Path(f"templates/projects/notebooks/{name}").rename(f"templates/projects/html_notebooks/{name}")
+
+        time.sleep(5)
 
         return redirect(url_for('get_all_notebooks'))
 
