@@ -50,6 +50,7 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=Fa
 # vínculo a la base de datos
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.static_folder = 'static/img/MGS Full Image'
 db = SQLAlchemy(app)
 
 
