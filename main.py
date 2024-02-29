@@ -39,8 +39,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['MAX_CONTENT_PATH'] = 10000000
 app.config['FLASK_DEBUG'] = 0
-app.static_folder = 'static'
-app.static_url_path = 'static'
 
 ckeditor = CKEditor(app)
 Bootstrap(app)
