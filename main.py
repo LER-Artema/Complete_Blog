@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 import time
 # from pathlib import Path
 from nbconvert import HTMLExporter
-
+import jinja2
 
 
 # Authentication Function
