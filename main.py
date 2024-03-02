@@ -336,7 +336,7 @@ def login():
             return render_template("login.html", image=image, admin=admin, no_password=True)
         else:
             login_user(user)
-            time.sleep(4)
+            time.sleep(4.7)
 
             return redirect(url_for('get_all_notebooks'))
 
