@@ -219,7 +219,7 @@ img::-moz-selection {
     }
 
     #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-        color:floralwhite;
+        color: floralwhite;
     }
 
     #mainNav .navbar-nav > li.nav-item > a {
@@ -720,6 +720,54 @@ footer .copyright {
     color: #A3A383;
 }
 
+/*------------------------------------------------------------------------------------------------------------------*/
+
+#descriptive_text {
+    position: relative;
+    top: 0; /* Inicialmente, los botones estarán arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: aparecer-text 0.7s ease-in-out forwards; /* Animación para que los botones bajen */
+    opacity: 0; /* Inicialmente, los botones serán transparentes */
+
+}
+
+@keyframes aparecer-text {
+    from {
+        top: -20px; /* Empieza arriba del elemento */
+        opacity: 0; /* Empieza transparente */
+    }
+    to {
+        top: 20px; /* Termina alineado con la parte superior del elemento */
+        opacity: 1; /* Termina completamente visible */
+    }
+
+}
+
+
+#descriptive_text.oculto {
+    position: relative;
+    top: 0; /* Inicialmente, los botones estarán arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: desaparecer-text 0.6s ease-in-out backwards; /* Animación para que los botones bajen */
+    opacity: 0; /* Inicialmente, los botones serán transparentes */
+}
+
+
+@keyframes desaparecer-text {
+    from {
+        top: 20px; /* Empieza arriba del elemento */
+        opacity: 1; /* Empieza transparente */
+    }
+    to {
+        top: -20px; /* Termina alineado con la parte superior del elemento */
+        opacity: 0; /* Termina completamente visible */
+    }
+
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
 
 #botones {
     position: relative;
@@ -739,6 +787,14 @@ footer .copyright {
     to {
         top: 20px; /* Termina alineado con la parte superior del elemento */
         opacity: 1; /* Termina completamente visible */
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+    0% {
+        transform: translateX(0);
+        opacity: 0;
     }
 }
 
@@ -762,6 +818,14 @@ footer .copyright {
         top: -20px; /* Termina alineado con la parte superior del elemento */
         opacity: 0; /* Termina completamente visible */
     }
+    0% {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 0;
+    }
 }
 
 
@@ -779,9 +843,10 @@ a {
     cursor: pointer;
     animation: red_trans 0.5s alternate;
 }
+
 @keyframes red_trans {
     0% {
-        color:floralwhite; /* Color inicial */
+        color: floralwhite; /* Color inicial */
     }
 
     100% {

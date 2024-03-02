@@ -1,5 +1,8 @@
-{% include "header.html" %}
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
 
+{% include "header.html" %}
 <!-- Page Header -->
 <header class="masthead">
 
@@ -31,6 +34,7 @@
 </div>
 
 
+
 <audio style="opacity: 0" id="audioPlayer" controls>
     <source src="static/sounds/VRSpawn.mp3" type="audio/mpeg">
 </audio>
@@ -55,7 +59,7 @@
     document.getElementById('file').addEventListener('change', function () {
         has_file = true
         var nombreArchivo = this.files[0].name;
-        if (nombreArchivo.length > 15){
+        if (nombreArchivo.length > 15) {
             nombreArchivo = nombreArchivo.substring(0, 16) + " ...";
         }
         document.getElementById('upload').innerText = nombreArchivo
@@ -92,3 +96,4 @@
 </body>
 </html>
 
+{% endblock %}

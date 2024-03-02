@@ -146,6 +146,17 @@ def get_all_notebooks():
 def upload_notebook():
     image = 'img/Funtionality Icons/Snake.jpg'
     admin = None
+    form = CreatePostForm()
+    if form.validate_on_submit():
+        new_post = BlogPost(
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            body=form.body.data,
+            img_url=form.img_url.data,
+            author=current_user,
+            date=date.today().strftime("%B %d, %Y")
+        )
+
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
     if request.method == 'POST':
@@ -199,7 +210,7 @@ def upload_notebook():
 
         return redirect(url_for('get_all_notebooks'))
 
-    return render_template("upload_notebook.html", image=image, admin=admin)
+    return render_template("upload_notebook.html",  form=form, image=image, admin=admin)
 
 
 @app.route('/download/<int:notebook>')
@@ -274,6 +285,8 @@ def register():
             db.session.add(user)
             db.session.commit()
             login_user(user)
+            time.sleep(2.5)
+
             return redirect(url_for('get_all_notebooks'))
 
         else:
@@ -323,6 +336,8 @@ def login():
             return render_template("login.html", image=image, admin=admin, no_password=True)
         else:
             login_user(user)
+            time.sleep(4)
+
             return redirect(url_for('get_all_notebooks'))
 
     return render_template("login.html", image=image, admin=admin)
@@ -331,6 +346,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    time.sleep(2.5)
     return redirect(url_for('get_all_notebooks'))
 
 

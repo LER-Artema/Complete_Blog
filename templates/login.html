@@ -68,6 +68,9 @@
     <source src="static/sounds/Access Denied.mp3" type="audio/mpeg">
 </audio>
 
+<audio style="opacity: 0" id="audioPlayer" controls>
+    <source src="static/sounds/VRSpawn.mp3" type="audio/mpeg">
+</audio>
 
 {% if no_user or no_password %}
     <script>
@@ -80,6 +83,13 @@
 
 
 <script>
+
+    $(document).ready(function () {
+        $("#uploadSound").click(function () {
+            $("#audioPlayer")[0].play()
+        })
+    })
+
 
     document.getElementById('email').addEventListener('click', function () {
         this.style.borderColor = '#ccc'

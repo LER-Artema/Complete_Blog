@@ -41,6 +41,10 @@
 </head>
 
 <body>
+<audio style="opacity: 0" id="logoutAudio" controls>
+    <source src="static/sounds/Voicy_Item Pickup Sound.mp3" type="audio/mpeg">
+</audio>
+
 {#<script src="{{ url_for('static', filename='js/load.js') }}"></script>#}
 
 <!-- Navigation -->
@@ -65,29 +69,29 @@
             <ul class="navbar-nav ml-auto">
                 {% if admin %}
                     <li class="nav-item">
-                        <a href="{{ url_for('upload_notebook') }}">Upload Jupyter Notebook</a>
+                        <a style="font-size: 12px" href="{{ url_for('upload_notebook') }}">Upload Jupyter Notebook</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a href="{{ url_for('about') }}">About</a>
+                    <a style="font-size: 12px" href="{{ url_for('about') }}">About</a>
                 </li>
                 {% if not admin %}
                     <li class="nav-item">
-                        <a href="{{ url_for('contact') }}">Contact</a>
+                        <a style="font-size: 12px" href="{{ url_for('contact') }}">Contact</a>
                     </li>
                 {% endif %}
 
 
                 {% if not current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a id="red" href="{{ url_for('login') }}">Login</a>
+                        <a  style="font-size: 12px" id="red" href="{{ url_for('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('register') }}">Register</a>
+                        <a style="font-size: 12px" href="{{ url_for('register') }}">Register</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a href="{{ url_for('logout') }}">Log Out</a>
+                        <a style="font-size: 12px"  id='sound' href="{{ url_for('logout') }}">Log Out</a>
                     </li>
 
                 {% endif %}
@@ -95,3 +99,13 @@
         </div>
     </div>
 </nav>
+
+<script>
+
+    $(document).ready(function () {
+        $("#sound").click(function () {
+            $("#logoutAudio")[0].play()
+        })
+    })
+
+</script>
