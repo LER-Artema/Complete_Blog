@@ -2,10 +2,21 @@
 
 <!-- Page Header -->
 {#  <header class="masthead" style="background-image: url('https://images.hdqwalls.com/download/porsche-911-carrera-rsr-1973-4k-8l-2560x1080.jpg')">#}
-<div class="container" style="margin-right: 1300px; padding: 0; width: 40%; ">
+{% for text in all_posts %}
+    <div id="{{ text.id }}-description" class="description-text"
+         style="background-color: rgba(0, 0, 0, 0.3); width: 800px;  position: absolute; right: 100px; top: 200px;
+          opacity: 0; padding-right: 30px; padding-left: 30px; border-radius: 10px">
 
-    <header class="masthead" style="height: 320px; ">
-        <div class="site-heading">
+        {{ text.description|safe }}
+    </div>
+
+{% endfor %}
+
+<div class="container" style="margin: 0px; padding: 0; width: 100%;">
+
+
+    <header class="masthead" style="height: 270px; padding-right: 366px">
+        <div class="site-heading" style="margin-bottom: 0">
             {#        <h1 id="highlight" style="margin-right: 1500px">Data Science </h1>#}
             <hr id="invisible">
             <h1 id="" style="color: #A3A383">—| Portfolio |—</h1>
@@ -13,84 +24,143 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container" style="margin-bottom: 100px">
-        <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto" style="bottom: 70px">
-                {% for post in all_posts %}
-                    <div class="post-preview" style="text-align: center; ">
-{#/*------------------------------------------------------------------------------------------------------------------*/#}
+    {#    <div class="container" style="margin-bottom: 100px">#}
+    {#        <div class="row">#}
+    <div style="bottom: 70px; padding-right: 365px; margin-left:0">
 
-                        <a href="{{ url_for('show_post', notebook_id=post.id) }}">
-                            <h2 class="post-title" id="title-highlight">
-                                [ {{ post.title }} ]
-                            </h2>
-                        </a>
+        {% for post in all_posts %}
+            <div class="post-preview" style="text-align: center; ">
+                {#/*------------------------------------------------------------------------------------------------------------------*/#}
 
-{#/*------------------------------------------------------------------------------------------------------------------*/#}
+                <a href="{{ url_for('show_post', notebook_id=post.id) }}">
+                    <h2 class="post-title" id="title-highlight">
+                        [ {{ post.title }} ]
+                    </h2>
+                </a>
 
-                        <div id="descriptive_text" class="descriptive_text" style="left: 120px;  display: none; height: 5px; width: 4px; z-index: -1; padding: 0; margin: 0">
-                            <button class="button" id="text-align"
-                                        style="margin-top: 15px; width: 239px; height: 59px; font-size: 34px; ">
-                                                                <h2 style="padding-top: 6px; color: floralwhite; font-size: 28px">
-                                DESCRIPTION
-                            </h2>
-                            </button>
+                {#/*------------------------------------------------------------------------------------------------------------------*/#}
 
-                        </div>
+                <div id="descriptive_text" class="descriptive_text"
+                     style="left: 269px;  display: none; height: 5px; width: 4px; z-index: -1; padding: 0; margin: 0">
 
+                    <button class="descriptions" id="{{ post.id }}"
+                            style="margin-top: 15px; width: 239px; height: 59px; font-size: 34px;
+                        background-color: #A3A383;
+                        color: floralwhite;
+                        border: 3px solid #ccc; /* Agrega un borde */
+                        border-radius: 7px;
+                        cursor: pointer; ">
 
-{#/*------------------------------------------------------------------------------------------------------------------*/#}
+                        <h2 style="padding-top: 6px; color: floralwhite; font-size: 28px">
+                            DESCRIPTION
+                        </h2>
+                    </button>
 
-                        <div id="botones" class="botones" style="display: none; height: 50px; width: 143px; z-index: -1; padding-bottom: 100px">
-
-                            <a
-                                    href="{{ url_for('download', notebook=post.id) }}" class="download">
-                                <button class="button" id="text-align"
-                                        style="margin-top: 10px; width: 69px; height: 59px; font-size: 34px;">
-                                    <img
-                                            style="height: 54%; margin-bottom: 7px"
-                                            src="static/img/Funtionality Icons/Download.png">
-                                </button>
-                            </a>
-{#/*------------------------------------------------------------------------------------------------------------------*/#}
-
-                            <a
-                                    href="{{ url_for('delete_post', notebook_id=post.id) }}" class="delete">
-                                <button class="button" id="text-align"
-                                        style="margin-top: 10px; width: 69px; height: 59px;font-size: 34Px">
-                                    <img style="height: 54%; margin-bottom: 8px"
-                                         src="static/img/Funtionality Icons/delete.png">
-
-                                </button>
-                            </a>
+                </div>
 
 
+                {#/*------------------------------------------------------------------------------------------------------------------*/#}
 
-                        </div>
-{#/*------------------------------------------------------------------------------------------------------------------*/#}
+                <div id="botones" class="botones"
+                     style="display: none; height: 50px; width: 143px; z-index: -1; padding-bottom: 100px">
+
+                    <a
+                            href="{{ url_for('download', notebook=post.id) }}" class="download">
+                        <button class="button" id="text-align"
+                                style="margin-top: 10px; width: 69px; height: 59px; font-size: 34px;">
+                            <img
+                                    style="height: 54%; margin-bottom: 7px"
+                                    src="static/img/Funtionality Icons/Download.png">
+                        </button>
+                    </a>
+                    {#/*------------------------------------------------------------------------------------------------------------------*/#}
+
+                    <a href="{{ url_for('delete_post', notebook_id=post.id) }}" class="delete">
+                        <button class="button" id="text-align"
+                                style="margin-top: 10px; width: 69px; height: 59px;font-size: 34Px">
+                            <img style="height: 54%; margin-bottom: 8px"
+                                 src="static/img/Funtionality Icons/delete.png">
+
+                        </button>
+                    </a>
 
 
-                    </div>
-                {% endfor %}
+                </div>
+                {#/*------------------------------------------------------------------------------------------------------------------*/#}
 
-
-                <!-- New Post -->
-                {#            <div class=" col-lg-3 col-md-7 mx-auto">#}
-                {#                <div>#}
-                {#                    {% if admin %}#}
-                {#                        <a class="button" id="text-align" href="{{ url_for('add_new_post') }}">Create New Post</a>#}
-                {#                    {% endif %}#}
-                {#                </div>#}
-                {#            </div>#}
 
             </div>
-        </div>
+        {% endfor %}
+
+        <!-- New Post -->
+        {#            <div class=" col-lg-3 col-md-7 mx-auto">#}
+        {#                <div>#}
+        {#                    {% if admin %}#}
+        {#                        <a class="button" id="text-align" href="{{ url_for('add_new_post') }}">Create New Post</a>#}
+        {#                    {% endif %}#}
+        {#                </div>#}
+        {#            </div>#}
+
+        {#            </div>#}
+        {#        </div>#}
     </div>
+
 </div>
 
 <script>
 
+    var descriptions = document.querySelectorAll(".descriptions");
+
+
+    for (var i = 0; i < descriptions.length; i++) {
+        descriptions[i].addEventListener("click", function () {
+            var text = this.id.toString()
+
+
+            var current_opacity = document.getElementById(text + '-description').style.opacity
+
+            if (current_opacity === '0') {
+                $('.description-text').css('opacity', 0);
+                {#console.log(this)#}
+                {#console.log(document.getElementById(text + '-description').innerHTML)#}
+                {#this.innerHTML.style.color = 'white'#}
+                {#document.getElementById(text + '-description').innerHTML.style.color = 'white'#}
+
+                document.getElementById(text + '-description').animate({
+                    opacity: 1 // Cambia la opacidad a 1 gradualmente
+
+                }, 450); //
+
+                setTimeout(function () {
+
+                        document.getElementById(text + '-description').style.opacity = 1
+
+
+                    },
+                    435);
+
+
+            } else {
+                document.getElementById(text + '-description').animate({
+                    opacity: 0 // Cambia la opacidad a 1 gradualmente
+
+                }, 250); //
+
+                setTimeout(function () {
+
+                        document.getElementById(text + '-description').style.opacity = 0
+
+
+                    },
+                    220);
+            }
+
+        })
+    }
+
+
     var files_containers = document.querySelectorAll(".post-preview");
+
     var files_tags = document.querySelectorAll(".post-title");
     var associated_buttons = document.querySelectorAll(".botones");
     var descriptive_button = document.querySelectorAll(".descriptive_text");
@@ -117,7 +187,6 @@
                 descriptive_button[resource_locator].style.position = 'relative';
                 descriptive_button[resource_locator].classList.remove('oculto');
                 descriptive_button[resource_locator].style.display = 'block'
-
 
 
             }

@@ -1,24 +1,20 @@
-{% extends 'bootstrap/base.html' %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% block content %}
+
 
 {% include "header.html" %}
 <!-- Page Header -->
-<header class="masthead">
 
-    <div class="container">
-        <div class="page-heading" style="padding-top: 90px">
-            <h1 id="long_text">Information Load Out</h1>
-        </div>
+<div class="container" style="margin-top: 13px">
+    <div class="page-heading" style="padding-top: 90px">
+        <h1 id="long_text">Information Load Out</h1>
     </div>
+</div>
 
-</header>
 
 <!-- Main Content -->
-<div style="align-self: center; width: 300px; margin: 0 auto; align-items: center;
+<form style=" text-align: center" href="{{ url_for('upload_notebook') }}" method="POST"
+      enctype="multipart/form-data">
+    <div style="align-self: center; width: 300px; margin: 0 auto; align-items: center;
   justify-content: center; /* Centra horizontalmente *//">
-    <form style="bottom: 300px; text-align: center" href="{{ url_for('upload_notebook') }}" method="POST"
-          enctype="multipart/form-data">
 
         <input class="form-control custom-input" id="title" name="title" required="" type="text" value=""
                style="margin-bottom: 0px; margin-top: 65px; background-color: black;
@@ -26,13 +22,22 @@
                placeholder="Project Name">
 
         <input type="file" name="file" id="file" class="inputfile" accept=".ipynb" required>
-        <label name='upload' for="file" style="margin-top:50px;" id="upload">— UPLOAD
-            —</label>
+        <label name='upload' for="file" style="margin-top:50px;" id="upload">— UPLOAD —</label>
         <input type="submit" id="uploadSound" class="button" value="SUBMIT" style="margin-top: 50px">
 
-    </form>
-</div>
 
+        <!-- This container will become the editable. -->
+
+    </div>
+    <div style="align-self: center; width: 700px; margin: 0 auto; align-items: center;
+  justify-content: center;">
+
+        <div style="margin-top: 27px" id="toolbar-container"></div>
+        <div style="height: 300px; background-color: black" id="editor"></div>
+
+        <textarea name="content" id="hidden-editor" style="opacity: 0"></textarea>
+    </div>
+</form>
 
 
 <audio style="opacity: 0" id="audioPlayer" controls>
@@ -90,10 +95,23 @@
     });
 
 
+    DecoupledEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            const toolbarContainer = document.querySelector('#toolbar-container');
+            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+            editor.model.document.on('change:data', () => {
+                document.getElementById('hidden-editor').value = editor.getData();
+            });
+
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
 </script>
 
 
 </body>
 </html>
 
-{% endblock %}

@@ -108,6 +108,7 @@ class Notebook(db.Model):
     __tablename__ = "jupyter_notebooks"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=False, nullable=False)
+    description = db.Column(db.String(3000), unique=False, nullable=True)
     file = db.Column(db.String(250), unique=False, nullable=False)
 
 
@@ -122,11 +123,13 @@ def get_all_notebooks():
 
     notebooks = Notebook.query.all()
     admin = None
+
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
 
-    return render_template("index.html", all_posts=notebooks, current_user=current_user, image=image, admin=admin)
+    return render_template("index.html", all_posts=notebooks, image=image, admin=admin)
 
+# /Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/nbformat/__init__.py:93: MissingIDFieldWarning: Code cell is missing an id field, this will become a hard error in future nbformat versions. You may want to use `normalize()` on your notebooks before validations (available since nbformat 5.1.4). Previous versions of nbformat are fixing this issue transparently, and will stop doing so in the future.
 
 # Ruta original del blogpost
 # @app.route('/')
@@ -146,21 +149,11 @@ def get_all_notebooks():
 def upload_notebook():
     image = 'img/Funtionality Icons/Snake.jpg'
     admin = None
-    form = CreatePostForm()
-    if form.validate_on_submit():
-        new_post = BlogPost(
-            title=form.title.data,
-            subtitle=form.subtitle.data,
-            body=form.body.data,
-            img_url=form.img_url.data,
-            author=current_user,
-            date=date.today().strftime("%B %d, %Y")
-        )
-
     if current_user.is_authenticated and current_user.id == 1:
         admin = True
     if request.method == 'POST':
         f = request.files['file']
+        text = request.form['content']
         f.filename = f.filename.replace('(', '')
         f.filename = f.filename.replace(')', '')
 
@@ -180,7 +173,9 @@ def upload_notebook():
         notebook = Notebook(
             title=title,
             file=name,
+            description=text
         )
+
         db.session.add(notebook)
         db.session.commit()
         import nbformat
@@ -210,7 +205,7 @@ def upload_notebook():
 
         return redirect(url_for('get_all_notebooks'))
 
-    return render_template("upload_notebook.html",  form=form, image=image, admin=admin)
+    return render_template("upload_notebook.html", image=image, admin=admin)
 
 
 @app.route('/download/<int:notebook>')
