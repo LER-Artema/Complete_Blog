@@ -230,10 +230,11 @@ def delete_post(notebook_id):
         notebook_to_delete = Notebook.query.get(notebook_id)
         notebook_html_file = notebook_to_delete.file
         notebook_file = (notebook_to_delete.file).split('.html')[0] + '.ipynb'
-
-        os.remove(f"templates/projects/html_notebooks/{notebook_html_file}")
-        os.remove(f"templates/projects/notebooks/{notebook_file}")
-
+        try:
+            os.remove(f"templates/projects/html_notebooks/{notebook_html_file}")
+            os.remove(f"templates/projects/notebooks/{notebook_file}")
+        except:
+            pass
         db.session.delete(notebook_to_delete)
         db.session.commit()
         # Path(f"templates/projects/notebooks/{name}").(f"templates/projects/html_notebooks/{name}")
