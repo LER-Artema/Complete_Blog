@@ -219,7 +219,7 @@ img::-moz-selection {
     }
 
     #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-        color:floralwhite;
+        color: floralwhite;
     }
 
     #mainNav .navbar-nav > li.nav-item > a {
@@ -269,7 +269,9 @@ img::-moz-selection {
 
     #mainNav.is-visible {
         /* if the user changes the scrolling direction, we show the header */
-        transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 98%, 0);
+        border-bottom: 3px solid #A3A383;
+
     }
 }
 

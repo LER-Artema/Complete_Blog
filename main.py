@@ -191,8 +191,13 @@ def upload_notebook():
         # ep.preprocess(nb)
 
         # export to html
+        for cell in nb.cells:
+            if cell.cell_type == 'code':
+                cell.execution_count = 1  # Establece un valor para 'execution_count'
+
         html_exporter = HTMLExporter()
         html_exporter.exclude_input = False
+        # html_exporter = False
         html_data, resources = html_exporter.from_notebook_node(nb)
 
         # write to output file
