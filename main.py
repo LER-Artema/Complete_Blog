@@ -42,7 +42,7 @@ load_dotenv('/Users/Artema/Desktop/my_envs/my_envs.env')
 login_manager = LoginManager()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['MAX_CONTENT_PATH'] = 30000000
+app.config['MAX_CONTENT_PATH'] = 30,000,000
 app.config['FLASK_DEBUG'] = 0
 
 
