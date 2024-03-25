@@ -219,7 +219,7 @@ img::-moz-selection {
     }
 
     #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-        color: floralwhite;
+        color:floralwhite;
     }
 
     #mainNav .navbar-nav > li.nav-item > a {
