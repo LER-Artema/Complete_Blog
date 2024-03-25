@@ -1,6 +1,6 @@
 from datetime import date
 from functools import wraps
-from flask import Flask, render_template, redirect, url_for, abort, request, send_file
+from flask import Flask, render_template, redirect, url_for, abort, request, send_file, send_from_directory
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -16,7 +16,9 @@ from dotenv import load_dotenv
 import time
 # from pathlib import Path
 from nbconvert import HTMLExporter
+import nbformat
 import jinja2
+from markupsafe import Markup
 
 
 # Authentication Function
@@ -40,7 +42,7 @@ load_dotenv('/Users/Artema/Desktop/my_envs/my_envs.env')
 login_manager = LoginManager()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['MAX_CONTENT_PATH'] = 10000000
+app.config['MAX_CONTENT_PATH'] = 30000000
 app.config['FLASK_DEBUG'] = 0
 
 
@@ -178,7 +180,6 @@ def upload_notebook():
 
         db.session.add(notebook)
         db.session.commit()
-        import nbformat
         # from nbconvert.preprocessors import ExecutePreprocessor
 
         # read source notebook
@@ -404,7 +405,7 @@ def edit_post(post_id):
         img_url=post.img_url,
         body=post.body
     )
-    if edit_form.validate_on_submit():
+    if edit_form.validate_omit():
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
@@ -418,18 +419,12 @@ def edit_post(post_id):
 
 @app.route("/post/<int:notebook_id>", methods=['GET', 'POST'])
 def show_post(notebook_id):
-    image = 'img/Funtionality Icons/Snake.jpg'
     requested_notebook = Notebook.query.get(notebook_id)
-
-    admin = None
-    if current_user.is_authenticated and current_user.id == 1:
-        admin = True
-
-    return render_template(f"projects/html_notebooks/{requested_notebook.file}", image=image, admin=admin)
+    return send_from_directory('templates/projects/html_notebooks/', f"{requested_notebook.file}")
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=4000, debug=False)
 
 # slategrey darksslategrey
 # --jp-layout-color0 .jp-Cell
