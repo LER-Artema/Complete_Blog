@@ -54,7 +54,9 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=Fa
                     base_url=None)
 
 # vínculo a la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog.db')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -110,10 +112,10 @@ class Notebook(db.Model):
     __tablename__ = "jupyter_notebooks"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), unique=False, nullable=False)
-    description = db.Column(db.String(3000), unique=False, nullable=True)
+    description = db.Column(db.String(5000), unique=False, nullable=True)
     file = db.Column(db.String(250), unique=False, nullable=False)
 
-
+# db.drop_all()
 db.create_all()
 
 
