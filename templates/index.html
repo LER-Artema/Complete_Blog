@@ -4,8 +4,8 @@
 {#  <header class="masthead" style="background-image: url('https://images.hdqwalls.com/download/porsche-911-carrera-rsr-1973-4k-8l-2560x1080.jpg')">#}
 {% for text in all_posts %}
     <div id="{{ text.id }}-description" class="description-text"
-         style="background-color: rgba(127, 128, 97, 0.9); width: 800px;  position: absolute; right: 100px; top: 200px;
-          opacity: 0; padding-right: 30px; padding-left: 30px; border-radius: 10px">
+         style="background-color: rgba(127, 128, 97, 0.9); width: 800px;  position: absolute; right: 100px; top: 150px;
+          opacity: 0; padding-right: 30px; padding-left: 30px; border-radius: 10px ">
 
         {{ text.description|safe }}
     </div>
@@ -111,34 +111,16 @@
 
     var descriptions = document.querySelectorAll(".descriptions");
     var descriptions_text = document.querySelectorAll(".description-text");
+    description_buttons = []
+    for (var i = 0; i < descriptions.length; i++) {
+        description_buttons.push(descriptions[i].innerHTML)
+    }
+
     var timer;
-    var delay = 3000;  // Tiempo en milisegundos para considerar que es un "long press"
-
-
+    var delay = 300;  // Tiempo en milisegundos para considerar que es un "long press"
     for (var i = 0; i < descriptions.length; i++) {
 
 
-
-        descriptions[i].addEventListener('mousedown', function () {
-            var text = this.id.toString()
-
-            // Inicia un temporizador cuando el botón es pulsado
-            timer = setTimeout(function () {
-                console.log('Botón pulsado largo tiempo');
-                // Aquí puedes colocar la función que quieres ejecutar
-                // Por ejemplo, puedes cambiar el color del botón
-                 this.style.backgroundColor = 'red'
-            }, delay);
-        })
-
-        descriptions[i].addEventListener('mouseup mouseleave', function () {
-            var text = this.id.toString()
-
-            // Detiene el temporizador cuando se suelta el botón o el cursor sale del botón
-            clearTimeout(timer);
-            // Restablece el color del botón cuando se suelta
-             document.getElementById(text + '-description').style.backgroundColor = 'blue'
-        });
 
 
         descriptions[i].addEventListener("click", function () {
@@ -149,11 +131,6 @@
 
             if (current_opacity === '0') {
                 $('.description-text').css('opacity', 0);
-                {#console.log(this)#}
-                {#console.log(document.getElementById(text + '-description').innerHTML)#}
-                {#this.innerHTML.style.color = 'white'#}
-                {#document.getElementById(text + '-description').innerHTML.style.color = 'white'#}
-
                 document.getElementById(text + '-description').animate({
                     opacity: 1 // Cambia la opacidad a 1 gradualmente
 
@@ -192,7 +169,6 @@
 
 
     var files_containers = document.querySelectorAll(".post-preview");
-
     var files_tags = document.querySelectorAll(".post-title");
     var associated_buttons = document.querySelectorAll(".botones");
     var descriptive_button = document.querySelectorAll(".descriptive_text");
