@@ -13,7 +13,7 @@
 <!-- Main Content -->
 <div class="container" style="padding-top: 0px; margin-bottom: 200px">
     <div class="row" style="padding-top: 0px">
-        <div class="col-lg-8 col-md-10 mx-auto" style="background-color: rgba(0, 0, 0, 0.6);" style="padding-top: 0px">
+        <div class="col-lg-8 col-md-10 mx-auto" style="background-color: rgba(0, 0, 0, 0.6);border-radius: 1.3%;">
             <p style="color: floralwhite; opacity: 1; text-align: center"><span
                     class="palabra-especial">Information</span>, the currency of power</p>
 
@@ -54,7 +54,8 @@
 
                 What can we do in a world where truth is relative and freedom is an illusion? The answer lies in
                 awareness. We must awaken from our mental lethargy, question pre-established narratives, and seek truth
-                beyond surface appearances, beyond our relative social realities and find it in its absolute form. Only then can
+                beyond surface appearances, beyond our relative social realities and find it in its absolute form. Only
+                then can
                 we free ourselves from the yoke of manipulation and reclaim our legitimate born right.
             </p>
 
@@ -81,6 +82,15 @@
             // Aquí puedes definir el efecto o acción que deseas aplicar
             this.style.color = '#A3A383'; // Por ejemplo, cambiar el color del texto a rojo
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var palabra = document.getElementById("clickable-word");
+            palabra.addEventListener("click", function () {
+                document.body.background_image = ''; // Alterna entre clase con fondo cambiado y sin ella
+            });
+        });
+
+
         {#files_containers[i].addEventListener('click', function () {#}
         {#    // Aquí puedes definir el efecto o acción que deseas aplicar#}
         {#    this.style.color = '#d93f3f'; // Por ejemplo, cambiar el color del texto a rojo#}
